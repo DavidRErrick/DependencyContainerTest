@@ -14,9 +14,12 @@ namespace ConsoleApplication1
         static void Main(string[] args)
         {
             CustomContainer testcontainer = new CustomContainer();
-            testcontainer.Register<IRepository1, Repository1>();
-            IRepository1 testobject = testcontainer.Resolve<IRepository1>();
-            System.Console.WriteLine(testobject.getName());
+            testcontainer.Register<IRepository1, Repository1>(LifestyleType.Singleton);
+            IRepository1 testobject1 = testcontainer.Resolve<IRepository1>();
+            System.Console.WriteLine(testobject1.getName());
+            IRepository1 testobject2 = testcontainer.Resolve<IRepository1>();
+            System.Console.WriteLine(testobject2.getName());
+           
         }
     }
 }
