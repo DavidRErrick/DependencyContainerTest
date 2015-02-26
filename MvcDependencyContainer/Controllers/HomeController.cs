@@ -32,7 +32,10 @@ namespace MvcDependencyContainer.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            // a place for the Resolve<> pattern
+
+            IContactHelper myContactHelper = MvcDependencyContainer.DependencyContainer.RegisterContainer.Resolve<IContactHelper>();
+            ViewBag.Message = myContactHelper.getMessage();
 
             return View();
         }

@@ -26,7 +26,7 @@ namespace MvcDependencyContainer
             AuthConfig.RegisterAuth();
 
 
-            IContainer controllerContainer = new CustomContainer();
+            IContainer controllerContainer = MvcDependencyContainer.DependencyContainer.RegisterContainer.Instance;
         
             MvcDependencyContainer.DependencyContainer.RegisterControllers.register(controllerContainer);
             ControllerBuilder.Current.SetControllerFactory(new MvcDependencyContainer.DependencyContainer.DependencyControllerFactory(controllerContainer));

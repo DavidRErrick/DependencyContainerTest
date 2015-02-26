@@ -5,13 +5,13 @@ using System.Web;
 
 namespace MvcDependencyContainer.Models
 {
-    public class AboutHelper : IAboutHelper
+    public class ContactHelper : IContactHelper
     {
         readonly string message;
 
-        public AboutHelper()
+        public ContactHelper()
         {
-            message = "This is a message from your About Helper created at: " + DateTime.Now.ToLongTimeString(); 
+            message = "Message from Contact Helper created at: " + DateTime.Now.ToLongTimeString();
         }
         public string getMessage()
         {

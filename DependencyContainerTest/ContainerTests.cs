@@ -109,5 +109,15 @@ namespace DependencyContainerTest
             System.Console.WriteLine(testobject2.getName());
             Assert.AreSame(testobject1, testobject2);
         }
+        [Test]
+        public void createInstancefromtype()
+        {
+            CustomContainer testcontainer = new CustomContainer();
+            testcontainer.Register<IRepository1, Repository1>();
+           
+            object testobject = testcontainer.createInstanceFromType(typeof(ConstructorHasParm));
+            
+            Assert.IsInstanceOf<ConstructorHasParm>(testobject);
+        }
     }
 }

@@ -192,7 +192,9 @@
     </Compile>
     <Compile Include="Models\AboutHelper.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\ContactHelper.cs" />
     <Compile Include="Models\IAboutHelper.cs" />
+    <Compile Include="Models\IContactHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

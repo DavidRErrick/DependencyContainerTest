@@ -6,16 +6,25 @@ using DependencyContainer;
 
 namespace MvcDependencyContainer.DependencyContainer
 {
-    public static class RegisterContainer
+
+    public  class RegisterContainer
     {
-        static IContainer myContainer;
-        public static void registerContainer(IContainer container)
+        private static readonly IContainer instance = new CustomContainer();
+
+        private RegisterContainer() { }
+
+        public static IContainer Instance
         {
-            myContainer = container;
+            get
+            {
+                return instance;
+            }
         }
         public static IRepository Resolve<IRepository>()
         {
-            return myContainer.Resolve<IRepository>();
+            return Instance.Resolve<IRepository>();
         }
     }
+
+   
 }
