@@ -27,7 +27,7 @@ namespace MvcDependencyContainer
 
 
             IContainer controllerContainer = new CustomContainer();
-            RegisterContainer(controllerContainer);
+        
             MvcDependencyContainer.DependencyContainer.RegisterControllers.register(controllerContainer);
             ControllerBuilder.Current.SetControllerFactory(new MvcDependencyContainer.DependencyContainer.DependencyControllerFactory(controllerContainer));
         }
