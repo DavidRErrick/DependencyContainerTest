@@ -30,5 +30,6 @@ namespace DependencyContainer
         void Register<IRepository, Repository>(LifestyleType lifesytle=LifestyleType.Transient);
         IRepository Resolve<IRepository>();
         object Resolve(Type IRepositoryType);
+        object createInstanceFromType(Type typeToCreate);
     }
 }

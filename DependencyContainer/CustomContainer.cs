@@ -58,17 +58,27 @@ namespace DependencyContainer
             if (repositoryTypeAndLifstyle.lifestyle == LifestyleType.Singleton && repositoryTypeAndLifstyle.instance != null)
                 return repositoryTypeAndLifstyle.instance;
 
+            
+            object retObject = createInstanceFromType(repositoryTypeAndLifstyle.repoistoryType);
 
+            // save created object if Singleton type
+            if (repositoryTypeAndLifstyle.lifestyle == LifestyleType.Singleton)
+                repositoryTypeAndLifstyle.instance = retObject;
+
+            return retObject;
+        }
+
+        public object createInstanceFromType(Type typeToCreate)
+        {
             // Try to construct the object
             // Step-1: find the constructor - using the first constructor if more than one
-            ConstructorInfo ctorInfo = repositoryTypeAndLifstyle.repoistoryType.GetConstructors().First();
+            ConstructorInfo ctorInfo = typeToCreate.GetConstructors().First();
 
             // Step-2: find the parameters for the constructor and try to resolve those
             // all parameter must resolve for this to work
 
-            List<ParameterInfo> paramsInfo = ctorInfo.GetParameters().ToList();
             List<object> resolvedParams = new List<object>();
-            foreach (ParameterInfo param in paramsInfo)
+            foreach (ParameterInfo param in ctorInfo.GetParameters())
             {
                 Type t = param.ParameterType;
                 object res = Resolve(t);
@@ -77,11 +87,6 @@ namespace DependencyContainer
 
             // Step-3: using reflection invoke constructor to create the object
             object retObject = ctorInfo.Invoke(resolvedParams.ToArray());
-
-            // save created object if Singleton type
-            if (repositoryTypeAndLifstyle.lifestyle == LifestyleType.Singleton)
-                repositoryTypeAndLifstyle.instance = retObject;
-
             return retObject;
         }
 
