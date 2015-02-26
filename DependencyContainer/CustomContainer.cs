@@ -16,11 +16,11 @@ namespace DependencyContainer
             {
                 this.repoistoryType = repoistoryType;
                 this.lifestyle = lifestyle;
-                this.singleton = null;
+                this.instance = null;
             }
             public Type            repoistoryType{ get;private set;}
             public LifestyleType   lifestyle{ get;private set;} 
-            public object           singleton{ get; set;}   // place for singleton if lifestyle Singleton
+            public object           instance{ get; set;}   // place for singleton if lifestyle Singleton
         }
 
         private Dictionary<Type, RepositryAndLifstyle> containerMap = new Dictionary<Type, RepositryAndLifstyle>();
@@ -28,7 +28,7 @@ namespace DependencyContainer
        
      
 
-        public void Register<IRepository, Repository>(LifestyleType lifesytle=LifestyleType.Transient)
+        public void Register<IRepository, Repository>(LifestyleType lifesytle=LifestyleType.Transient) 
         {
             if (containerMap.ContainsKey(typeof(IRepository) ))
             {
@@ -46,15 +46,17 @@ namespace DependencyContainer
 
         public object Resolve(Type IRepositoryType)
         {
-            // Find the registered type 
-            if (!containerMap.ContainsKey(IRepositoryType))
-                throw new ContainerRegistrationException(string.Format("Can't resolve {0}. Type is not registed.", IRepositoryType.FullName));
+            
+            RepositryAndLifstyle repositoryTypeAndLifstyle;  
 
-            RepositryAndLifstyle repositoryTypeAndLifstyle = containerMap[IRepositoryType];
+            if (!containerMap.TryGetValue(IRepositoryType, out repositoryTypeAndLifstyle))
+            {
+                throw new ContainerRegistrationException(string.Format("Can't resolve {0}. Type is not registed.", IRepositoryType.FullName));
+            }
 
             // check if Singleton type and the singleton was created
-            if (repositoryTypeAndLifstyle.lifestyle == LifestyleType.Singleton && repositoryTypeAndLifstyle.singleton != null)
-                return repositoryTypeAndLifstyle.singleton;
+            if (repositoryTypeAndLifstyle.lifestyle == LifestyleType.Singleton && repositoryTypeAndLifstyle.instance != null)
+                return repositoryTypeAndLifstyle.instance;
 
 
             // Try to construct the object
@@ -78,7 +80,7 @@ namespace DependencyContainer
 
             // save created object if Singleton type
             if (repositoryTypeAndLifstyle.lifestyle == LifestyleType.Singleton)
-                repositoryTypeAndLifstyle.singleton = retObject;
+                repositoryTypeAndLifstyle.instance = retObject;
 
             return retObject;
         }

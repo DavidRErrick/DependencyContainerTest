@@ -21,6 +21,24 @@ namespace DependencyContainerTest
             Assert.IsInstanceOf<Repository1>(testobject);    
         }
         [Test]
+        public void register_and_resolve_with_typeof()
+        {
+            CustomContainer testcontainer = new CustomContainer();
+            testcontainer.Register<IRepository1, Repository1>();
+            IRepository1 testobject = (IRepository1)testcontainer.Resolve(typeof(IRepository1));
+            System.Console.WriteLine(testobject.getName());
+            Assert.IsInstanceOf<Repository1>(testobject);
+        }
+        [Test]
+        public void register_and_resolve_throughInterface()
+        {
+            IContainer testcontainer = new CustomContainer();
+            testcontainer.Register<IRepository1, Repository1>();
+            IRepository1 testobject = testcontainer.Resolve<IRepository1>();
+            System.Console.WriteLine(testobject.getName());
+            Assert.IsInstanceOf<Repository1>(testobject);
+        }
+        [Test]
         public void register_and_resolve_withconstructorParm()
         {
             CustomContainer testcontainer = new CustomContainer();

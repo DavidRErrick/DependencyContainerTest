@@ -24,6 +24,8 @@ namespace MvcDependencyContainer
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+
+
             IContainer controllerContainer = new CustomContainer();
             MvcDependencyContainer.DependencyContainer.RegisterControllers.register(controllerContainer);
             ControllerBuilder.Current.SetControllerFactory(new MvcDependencyContainer.DependencyContainer.DependencyControllerFactory(controllerContainer));

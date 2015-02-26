@@ -11,7 +11,8 @@ namespace MvcDependencyContainer.DependencyContainer
     {
         public static void register(IContainer container)
         {
-            container.Register<MvcDependencyContainer.Controllers.AccountController, MvcDependencyContainer.Controllers.AccountController>();
+            // not necessary to register controller with default constructor - code will work with or without following line:
+            //container.Register<MvcDependencyContainer.Controllers.AccountController, MvcDependencyContainer.Controllers.AccountController>();
             container.Register<MvcDependencyContainer.Controllers.HomeController, MvcDependencyContainer.Controllers.HomeController>();
             container.Register<IAboutHelper, AboutHelper>(LifestyleType.Singleton);
         }

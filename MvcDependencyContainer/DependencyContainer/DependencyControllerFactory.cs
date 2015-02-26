@@ -20,7 +20,15 @@ namespace MvcDependencyContainer.DependencyContainer
 
         protected override IController GetControllerInstance(RequestContext requestContext,Type controllerType)
         {
-            return container.Resolve(controllerType) as Controller;
+            try
+            {
+                return container.Resolve(controllerType) as Controller;
+            }
+            catch (ContainerRegistrationException )
+            {
+                // if not registered used default behavior - ie for contrller with defalut constructor
+                return base.GetControllerInstance(requestContext, controllerType);
+            }
         }
      }
 }
